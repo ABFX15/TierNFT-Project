@@ -105,8 +105,9 @@ contract TierNFT is ERC721, Ownable {
         pure
         returns (string memory)
     {
-        string(
-            abi.encodePacked(SVG_START, tierNameOf(_tokenTier), SVG_END)
+        return 
+            string(
+                abi.encodePacked(SVG_START, tierNameOf(_tokenTier), SVG_END)
         );
     }
 
@@ -116,20 +117,19 @@ contract TierNFT is ERC721, Ownable {
         string memory _imageSVG,
         uint256 _tokenTier
     ) public pure returns (string memory) {
-        return 
-            string(
-                abi.encodePacked(
-                    '{"name": "',
-                    _name,
-                    " #",
-                    Strings.toString(_tokenId),
-                    '", "description": "NFT Tier List", "image": "data:image/svg+xml;base64,',
-                    _imageSVG,
-                    '","attritbutes":[{"trait_type": "Tier", "value": "',
-                    tierNameOf(_tokenTier),
-                    '"}]}'
-                )
-            );
+        return string(
+            abi.encodePacked(
+                '{"name": "',
+                _name,
+                ' #',
+                Strings.toString(_tokenId),
+                '", "description": "TierNFTs collection", "image": "data:image/svg+xml;base64,',
+                _imageSVG,
+                '","attributes":[{"trait_type": "Tier", "value": "',
+                tierNameOf(_tokenTier),
+                '" }]}'
+            )
+        );
     }
 
     function tokenURI(uint256 tokenId)
