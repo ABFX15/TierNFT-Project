@@ -72,7 +72,7 @@ contract TierNFT is ERC721, Ownable {
     /////////////////////////////////////////
 
     function mint() public payable {
-        if(msg.value < TIER_VALUE_0){
+        if(msg.value == 0){
             revert TIER__NOT_ENOUGH_VALUE_FOR_MINIMUM();
         }
         
@@ -92,7 +92,7 @@ contract TierNFT is ERC721, Ownable {
         override
         returns (string memory)
     {
-        if (_exists(tokenId) == false) {
+        if (!_exists(tokenId)) {
             revert TOKEN__TOKEN_DOES_NOT_EXIST();
         }
 
