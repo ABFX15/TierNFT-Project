@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "something": "some other script",
+    "test": "hardhat test --network hardhat"
   },
   "keywords": [],
   "author": "",
@@ -17,4 +19,7 @@
     "@openzeppelin/contracts": "^4.7.3",
     "dotenv": "^16.4.5"
   }
+
+
+
 }

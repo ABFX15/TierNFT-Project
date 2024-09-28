@@ -75,6 +75,7 @@ contract TierNFT is ERC721, Ownable {
         if(msg.value == 0){
             revert TIER__NOT_ENOUGH_VALUE_FOR_MINIMUM();
         }
+
         
         uint256 tierId = 0;
         if (msg.value >= TIER_VALUE_2) tierId = 2;
