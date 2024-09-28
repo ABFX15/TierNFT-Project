@@ -2,7 +2,7 @@ const hre = require("hardhat");
 
 /** Set contract and collection name **/
 const CONTRACT_NAME = "TierNFT";
-const CONTRACT_ADDRESS = "0x7173c8Ac66F795B38E20952d7e94E6EB793CA347";
+const CONTRACT_ADDRESS = "0x9965507D1a55bcC2695C58ba16FB37d819B0A4dc";
 const VALUE_TIER_0 = "0.01"; // in ethers/matic
 const VALUE_TIER_1 = "0.02"; // in ethers/matic
 const VALUE_TIER_2 = "0.05"; // in ethers/matic

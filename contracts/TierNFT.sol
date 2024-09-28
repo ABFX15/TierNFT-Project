@@ -53,6 +53,7 @@ contract TierNFT is ERC721, Ownable {
 
 
     uint256 public totalSupply;
+
     mapping(uint256 => uint256) public tokenTier;
 
     //////////////////
@@ -89,6 +90,48 @@ contract TierNFT is ERC721, Ownable {
         tokenTier[totalSupply] = tierId;
     }
 
+    function tierNameOf(uint256 _tokenTier)
+        public
+        pure
+        returns (string memory)
+    {
+        if(_tokenTier == 0) return TIER_NAME_0;
+        if(_tokenTier == 1) return TIER_NAME_1; 
+        return TIER_NAME_2;
+    }
+
+    function imageSVGOf(uint256 _tokenTier)
+        public
+        pure
+        returns (string memory)
+    {
+        string(
+            abi.encodePacked(SVG_START, tierNameOf(_tokenTier), SVG_END)
+        );
+    }
+
+    function finalJSON(
+        string memory _name,
+        uint256 _tokenId,
+        string memory _imageSVG,
+        uint256 _tokenTier
+    ) public pure returns (string memory) {
+        return 
+            string(
+                abi.encodePacked(
+                    '{"name": "',
+                    _name,
+                    " #",
+                    Strings.toString(_tokenId),
+                    '", "description": "NFT Tier List", "image": "data:image/svg+xml;base64,',
+                    _imageSVG,
+                    '","attritbutes":[{"trait_type": "Tier", "value": "',
+                    tierNameOf(_tokenTier),
+                    '"}]}'
+                )
+            );
+    }
+
     function tokenURI(uint256 tokenId)
         public
         view
@@ -100,26 +143,21 @@ contract TierNFT is ERC721, Ownable {
             revert TOKEN__TOKEN_DOES_NOT_EXIST();
         }
 
-        string memory tierName = tokenTier[tokenId] == 2
-            ? TIER_NAME_2
-            : tokenTier[tokenId] == 1
-            ? TIER_NAME_1
-            : TIER_NAME_0;
+        // string memory tierName = tokenTier[tokenId] == 2
+        //     ? TIER_NAME_2
+        //     : tokenTier[tokenId] == 1
+        //     ? TIER_NAME_1
+        //     : TIER_NAME_0;
             
-        string memory imageSVG = string(
-            abi.encodePacked(SVG_START, tierName, SVG_END)
-        );
+        string memory imageSVG = imageSVGOf(tokenTier[tokenId]);
 
         string memory json = Base64.encode(
             bytes(
-                string(
-                    abi.encodePacked(
-                        '{"name": "', name(), "#", Strings.toString(tokenId),
-                        '", "description": "NFT Tier List",'
-                        '"image": "data:image/svg+xml;base64,', Base64.encode(bytes(imageSVG)),
-                        '","attributes":[{"trait_type": "Tier", "value": "', tierName,
-                        '"}]}'
-                    )
+                finalJSON(
+                    name(),
+                    tokenId,
+                    Base64.encode(bytes(imageSVG)),
+                    tokenTier[tokenId]
                 )
             )
         );
