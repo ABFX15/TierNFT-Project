@@ -38,7 +38,7 @@ describe("TierNFT", function () {
         contract.mint({
           value: hre.ethers.parseEther("0.001"),
         }),
-      ).to.be.revertedWith("Not enough value for the minimum Tier");
+      ).to.be.revertedWithCustomError(contract, "TIER__NOT_ENOUGH_VALUE_FOR_MINIMUM");
       await expect(await contract.totalSupply()).to.equal(0);
     });
   
@@ -79,7 +79,7 @@ describe("TierNFT", function () {
     });
   
     it("should error if balance is zero", async function () {
-      await expect(contract.withdraw()).to.be.revertedWith("Balance should be > 0");
+      await expect(contract.withdraw()).to.be.revertedWithCustomError(contract, "BALANCE__ZERO_BALANCE");
     });
   
     it("should success if owner", async function () {
